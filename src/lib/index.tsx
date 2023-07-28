@@ -1,1 +1,1 @@
-export { default as NormalSphere } from './NormalSphere';
+export { default as Sphere3DText } from './Sphere3DText';

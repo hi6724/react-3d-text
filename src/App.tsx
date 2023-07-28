@@ -1,5 +1,5 @@
 import React from 'react';
-import { NormalSphere } from './lib';
+import { Sphere3DText } from './lib';
 
 const TEXT_ARR = [
   // { value: 'PINK', textColor: 'PINK' },
@@ -46,15 +46,16 @@ const TEXT_ARR = [
 function App() {
   return (
     <div>
-      <NormalSphere
+      <Sphere3DText
         textList={TEXT_ARR}
         height='600px'
         width='600px'
         distance={15}
-        // textRotation={{ x: 30, y: 30, z: 0 }}
+        textRotation={{ x: 30, y: 15, z: 0 }}
         fontSize='md'
         alwaysFaceCamera
         beveled
+        autoRotate
         // background='night'
       />
     </div>

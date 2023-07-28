@@ -1,27 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { Canvas, extend } from '@react-three/fiber';
-import { motion } from 'framer-motion-3d';
 import {
   Center,
   Environment,
-  FontData,
   OrbitControls,
   OrbitControlsChangeEvent,
-  PerspectiveCamera,
   Text3D,
 } from '@react-three/drei';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
 import InterFont from '../Inter_Bold.json';
 import { Group } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      textGeometry: any;
-    }
-  }
-}
 
 const SIZE_MAP = {
   sm: { size: 0.2, height: 0.1, bevel: 0.02 },
@@ -30,48 +19,14 @@ const SIZE_MAP = {
   xl: { size: 0.8, height: 0.4, bevel: 0.08 },
 };
 
-type TextType =
-  | {
-      value: string;
-      textColor: string;
-    }
-  | string;
-
-type Props = {
-  textList: TextType[];
-  width?: string;
-  height?: string;
-  radius?: number;
-  alwaysFaceCamera?: boolean;
-  spotLight?: boolean;
-  baseColor?: string;
-  fontSize?: 'sm' | 'md' | 'lg' | 'xl';
-  font?: string | FontData;
-  textRotation?: { x: number; y: number; z: number };
-  beveled?: boolean;
-  distance?: number;
-  autoRotaion?: boolean;
-  background?:
-    | 'apartment'
-    | 'city'
-    | 'dawn'
-    | 'forest'
-    | 'lobby'
-    | 'night'
-    | 'park'
-    | 'studio'
-    | 'sunset'
-    | 'warehouse';
-};
-
-function NormalSphere({
+function Sphere3DText({
   textList,
   width,
   height,
   baseColor,
-  autoRotaion = false,
+  autoRotate = false,
   distance = Math.ceil(textList.length ** 0.5) * 3,
-  beveled = false,
+  beveled = true,
   textRotation = { x: 0, y: 0, z: 0 },
   alwaysFaceCamera = false,
   radius = Math.ceil(textList.length ** 0.5),
@@ -99,16 +54,16 @@ function NormalSphere({
     setPositions(newP);
   }, [pointsRef, pointsCount]);
 
-  // 자동회전
+  // always face camera
   const handleOrbitChanged = (e: OrbitControlsChangeEvent | undefined) => {
     if (e === undefined) return;
     if (alwaysFaceCamera === false) return;
     const { x, y, z } = e.target.object.rotation;
 
-    textsRefArr.current.forEach((plane) => {
-      plane.rotation.x = x + degToRad(textRotation.x);
-      plane.rotation.y = y + degToRad(textRotation.y);
-      plane.rotation.z = z + degToRad(textRotation.z);
+    textsRefArr.current.forEach(({ rotation }) => {
+      rotation.x = x;
+      rotation.y = y;
+      rotation.z = z;
     });
   };
 
@@ -117,8 +72,14 @@ function NormalSphere({
       camera={{ position: [0, 0, distance] }}
       style={{ width: width, height: height }}
     >
-      <Environment background preset={background} blur={0.8} />
-      <OrbitControls onChange={handleOrbitChanged} />
+      {background !== 'none' ? (
+        <Environment background preset={background} blur={0.8} />
+      ) : null}
+      <OrbitControls
+        onChange={handleOrbitChanged}
+        autoRotate={autoRotate}
+        autoRotateSpeed={3}
+      />
       <spotLight position={[0, 0, pointsCount * 5]} intensity={1} />
       <spotLight position={[0, 0, -pointsCount * 5]} intensity={1} />
       <spotLight position={[0, pointsCount * 5, 0]} intensity={1} />
@@ -128,7 +89,6 @@ function NormalSphere({
         <sphereGeometry args={[radius, pointsCount, pointsCount]} />
         <meshNormalMaterial />
       </points>
-
       {positions?.map(([x, z, y]: number[], i: number) => {
         let value: string = textList[i] as string;
         let material =
@@ -173,4 +133,4 @@ function NormalSphere({
   );
 }
 
-export default NormalSphere;
+export default Sphere3DText;
