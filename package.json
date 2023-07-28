@@ -1,5 +1,5 @@
 {
-  "name": "react-sphere-text",
+  "name": "react-3d-text",
   "version": "0.0.1",
   "private": false,
   "main": "dist/index.js",
@@ -14,11 +14,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hi6724/npm-hunmok"
+    "url": "https://github.com/hi6724/react-3d-text"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@react-three/drei": "^9.80.0",
     "@react-three/fiber": "^8.13.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
