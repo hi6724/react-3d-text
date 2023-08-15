@@ -14,10 +14,10 @@ import { degToRad } from 'three/src/math/MathUtils';
 import { SphereProps } from '../type';
 
 export const FONT_SIZE_MAP = {
-  sm: { size: 0.2, height: 0.1, bevel: 0.02 },
-  md: { size: 0.4, height: 0.2, bevel: 0.04 },
-  lg: { size: 0.6, height: 0.3, bevel: 0.06 },
-  xl: { size: 0.8, height: 0.4, bevel: 0.08 },
+  sm: { size: 0.6, height: 0.3, bevel: 0.06 },
+  md: { size: 1.2, height: 0.6, bevel: 0.12 },
+  lg: { size: 1.8, height: 0.9, bevel: 0.18 },
+  xl: { size: 2.4, height: 1.2, bevel: 0.24 },
 };
 
 function Sphere3DText({
@@ -29,9 +29,9 @@ function Sphere3DText({
   autoRotate = false,
   distance = Math.floor(textList.length ** 0.5) * 3,
   beveled = true,
-  defaultRotation = { x: 0, y: 0, z: 0 },
+  defaultRotation = { x: 15, y: 15, z: 0 },
   alwaysFaceCamera = true,
-  radius = Math.floor(textList.length ** 0.5) * 3,
+  radius = Math.floor(textList.length ** 0.5) * 5,
   fontSize = 'md',
   background = 'none',
 }: SphereProps) {

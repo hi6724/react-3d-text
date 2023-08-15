@@ -10,7 +10,7 @@ export default function SphereText({
   fontColor,
   hoverColor,
   distance = Math.floor(textList.length ** 0.5) * 3,
-  radius = Math.floor(textList.length ** 0.5) * 3,
+  radius = Math.floor(textList.length ** 0.5) * 5,
   fog = true,
   zoom = false,
   autoRotate = false,

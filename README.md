@@ -1,46 +1,124 @@
-# Getting Started with Create React App
+# react-3d-text
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**A ReactJS component to render a 3D Sphere Text.**
 
-## Available Scripts
+By installing this component and writing only a data you can obtain this
 
-In the project directory, you can run:
+<img src="" alt="react-sphere-text" />
 
-### `npm start`
+or
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="" alt="react-sphere-3d-text" />
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+Install `react-3d-text` with [npm](https://www.npmjs.com/):
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+npm install react-3d-text
+```
 
-### `npm run build`
+## Basic Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+import { SphereText, Sphere3DText ... } from '@react-3d-text'
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+// Example items
+const TEXT_ARR = [
+  'CSS',
+  'RN',
+  'Firebase',
+  'Storybook',
+  'Next.js',
+  'JS/TS',
+  'gsap',
+  'React',
+  'Graphql',
+  'Redux',
+  'Tailwind',
+  'Recoil',
+  'Python',
+  'Java',
+  'npm',
+  'git',
+  'Node JS',
+  'ES5/ES6',
+  'RTK',
+  'CSS',
+  'RN',
+  'Firebase',
+  'Storybook',
+  'Next.js',
+  'JS/TS',
+  'gsap',
+  'React',
+  'Graphql',
+  'Redux',
+  'Tailwind',
+  'Recoil',
+  'Python',
+  'Java',
+  'npm',
+  'git',
+  'Node JS',
+  'ES5/ES6',
+];
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# SphereText
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Props
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+| Name         | Type       | Description                                 |
+| ------------ | ---------- | ------------------------------------------- | ------------------------------------------- |
+| `textList`   | `string[]` | **Required.** The total number of pages.    |
+| `width`      | `string    | number`                                     | The range of pages displayed.               |
+| `height`     | `string    | number`                                     | The number of pages to display for margins. |
+| `radius`     | `number`   | The number of pages to display for margins. |
+| `distance`   | `number`   | The number of pages to display for margins. |
+| `fontSize`   | `number`   | The number of pages to display for margins. |
+| `fontColor`  | `string`   | The number of pages to display for margins. |
+| `hoverColor` | `string`   | The number of pages to display for margins. |
 
-## Learn More
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+import React, { useEffect, useState } from 'react';
+import { Sphere3DText, SphereText } from 'react-3d-text';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function Items() {
+  return <SphereText textList={TEXT_ARR} width='1000px' height='500px' />;
+}
+```
+
+# Sphere3DText
+
+---
+
+### Props
+
+| Name         | Type       | Description                                 |
+| ------------ | ---------- | ------------------------------------------- | ------------------------------------------- |
+| `textList`   | `string[]` | **Required.** The total number of pages.    |
+| `width`      | `string    | number`                                     | The range of pages displayed.               |
+| `height`     | `string    | number`                                     | The number of pages to display for margins. |
+| `radius`     | `number`   | The number of pages to display for margins. |
+| `distance`   | `number`   | The number of pages to display for margins. |
+| `fontSize`   | `number`   | The number of pages to display for margins. |
+| `fontColor`  | `string`   | The number of pages to display for margins. |
+| `hoverColor` | `string`   | The number of pages to display for margins. |
+
+## Usage
+
+```javascript
+import React, { useEffect, useState } from 'react';
+import { Sphere3DText, SphereText } from 'react-3d-text';
+
+function Items() {
+  return <Sphere3DText textList={TEXT_ARR} width='1000px' height='500px' />;
+}
+```

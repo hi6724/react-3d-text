@@ -39,6 +39,6 @@ export type AnimateTextProps = {
 type CommonProps = {
   distance?: number;
   fontSize?: 'sm' | 'md' | 'lg' | 'xl' | number;
-  width?: string;
+  width?: string | number;
   height?: string;
 };

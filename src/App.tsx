@@ -48,24 +48,28 @@ function App() {
       {/* <Awesome3DText text='HELLO WORLD' width='1000px' height='800px' /> */}
       <SphereText
         textList={TEXT_ARR}
-        width='400px'
-        height='400px'
+        width={1000}
+        height='500px'
         zoom={false}
-        fontSize={1}
-        radius={30}
+        fontColor='#00ff00'
+        hoverColor='#ff00ff'
+        // fontSize={1}
+        // radius={10}
       />
+
       <Sphere3DText
         textList={TEXT_ARR}
-        height='400px'
-        width='400px'
-        fontSize={1}
-        radius={30}
-        defaultRotation={{ x: 30, y: 30, z: 0 }}
-        autoRotate
-        fontColor='#12dd12'
+        width='1000px'
+        height='500px'
+        // defaultRotation={{ x: 30, y: 30, z: 0 }}
+        // fontSize={}?
+        // radius={30}
+        // autoRotate
+        // fontColor='#12dd12'
       />
     </div>
   );
 }
+
 
 export default App;
