@@ -8,11 +8,12 @@ import {
   Text3D,
 } from '@react-three/drei';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import InterFont from '../Inter_Bold.json';
-import { Group } from 'three';
+import InterFont from './Inter_Bold.json';
+import { Group, MeshNormalMaterial, MeshToonMaterial } from 'three';
 import { degToRad } from 'three/src/math/MathUtils';
+import { SphereProps } from '../type';
 
-const SIZE_MAP = {
+export const FONT_SIZE_MAP = {
   sm: { size: 0.2, height: 0.1, bevel: 0.02 },
   md: { size: 0.4, height: 0.2, bevel: 0.04 },
   lg: { size: 0.6, height: 0.3, bevel: 0.06 },
@@ -23,22 +24,24 @@ function Sphere3DText({
   textList,
   width,
   height,
-  baseColor,
+  fontColor,
+  zoom = false,
   autoRotate = false,
-  distance = Math.ceil(textList.length ** 0.5) * 3,
+  distance = Math.floor(textList.length ** 0.5) * 3,
   beveled = true,
-  textRotation = { x: 0, y: 0, z: 0 },
-  alwaysFaceCamera = false,
-  radius = Math.ceil(textList.length ** 0.5),
-  font = InterFont as any,
+  defaultRotation = { x: 0, y: 0, z: 0 },
+  alwaysFaceCamera = true,
+  radius = Math.floor(textList.length ** 0.5) * 3,
   fontSize = 'md',
-  background = 'dawn',
-}: Props) {
+  background = 'none',
+}: SphereProps) {
   extend({ TextGeometry });
+  const font = InterFont as any;
   const [pointsRef, setPointsRef] = useState<any>();
   const [positions, setPositions] = useState<any>();
   const textsRefArr = useRef<Group[]>([]);
-  const pointsCount = Math.ceil(textList.length ** 0.5);
+  const pointsCount = Math.floor(textList.length ** 0.5);
+  const lightRef = useRef<any>();
 
   useEffect(() => {
     if (!pointsRef) return;
@@ -57,6 +60,12 @@ function Sphere3DText({
   // always face camera
   const handleOrbitChanged = (e: OrbitControlsChangeEvent | undefined) => {
     if (e === undefined) return;
+
+    const cameraPos = e.target.object.position;
+    // console.log(lightRef.current.position, cameraPos);
+    lightRef.current.position.x = cameraPos.x;
+    lightRef.current.position.y = cameraPos.y;
+    lightRef.current.position.z = cameraPos.z;
     if (alwaysFaceCamera === false) return;
     const { x, y, z } = e.target.object.rotation;
 
@@ -69,9 +78,10 @@ function Sphere3DText({
 
   return (
     <Canvas
-      camera={{ position: [0, 0, distance] }}
+      camera={{ position: [0, 0, distance], fov: 90 }}
       style={{ width: width, height: height }}
     >
+      {true ? <fog attach='fog' args={['#fff', 0, radius * 1.5]} /> : null}
       {background !== 'none' ? (
         <Environment background preset={background} blur={0.8} />
       ) : null}
@@ -79,53 +89,77 @@ function Sphere3DText({
         onChange={handleOrbitChanged}
         autoRotate={autoRotate}
         autoRotateSpeed={3}
+        enableZoom={zoom}
       />
-      <spotLight position={[0, 0, pointsCount * 5]} intensity={1} />
-      <spotLight position={[0, 0, -pointsCount * 5]} intensity={1} />
-      <spotLight position={[0, pointsCount * 5, 0]} intensity={1} />
-      <spotLight position={[0, -pointsCount * 5, 0]} intensity={1} />
+      <ambientLight intensity={0.2} />
+      <directionalLight ref={lightRef} position={[0, 0, distance]} />
 
       <points ref={(el: any) => setPointsRef(el)}>
-        <sphereGeometry args={[radius, pointsCount, pointsCount]} />
+        <sphereGeometry args={[radius / Math.PI, pointsCount, pointsCount]} />
         <meshNormalMaterial />
       </points>
       {positions?.map(([x, z, y]: number[], i: number) => {
         let value: string = textList[i] as string;
-        let material =
-          baseColor === undefined ? (
-            <meshNormalMaterial />
-          ) : (
-            <meshStandardMaterial color={baseColor} />
-          );
 
-        if (typeof value === 'object') {
-          const tmp = textList[i] as any;
-          value = tmp.value;
-          material = <meshStandardMaterial color={tmp.textColor} />;
-        }
         return (
           <Center
             key={i}
             position={[x, y, z]}
             ref={(el) => (textsRefArr.current[i] = el as Group)}
           >
-            <Text3D
-              rotation={[
-                degToRad(textRotation.x),
-                degToRad(textRotation.y),
-                degToRad(textRotation.z),
+            <ThreeWord
+              rotaion={[
+                degToRad(defaultRotation.x),
+                degToRad(defaultRotation.y),
+                degToRad(defaultRotation.z),
               ]}
               font={font}
-              size={SIZE_MAP[fontSize].size}
-              height={SIZE_MAP[fontSize].height}
+              fontSize={
+                typeof fontSize === 'number'
+                  ? fontSize
+                  : FONT_SIZE_MAP[fontSize].size
+              }
+              beveled={beveled}
+              fontColor={fontColor}
+              value={value}
+            />
+            {/* <Text3D
+              rotation={[
+                degToRad(defaultRotation.x),
+                degToRad(defaultRotation.y),
+                degToRad(defaultRotation.z),
+              ]}
+              font={font}
+              size={
+                typeof fontSize === 'number'
+                  ? fontSize
+                  : FONT_SIZE_MAP[fontSize].size
+              }
+              height={
+                typeof fontSize === 'number'
+                  ? fontSize / 2
+                  : FONT_SIZE_MAP[fontSize].height
+              }
               bevelEnabled={beveled}
-              bevelSize={SIZE_MAP[fontSize].bevel}
-              bevelThickness={SIZE_MAP[fontSize].bevel * 2}
+              bevelSize={
+                typeof fontSize === 'number'
+                  ? fontSize / 10
+                  : FONT_SIZE_MAP[fontSize].bevel
+              }
+              bevelThickness={
+                typeof fontSize === 'number'
+                  ? fontSize / 5
+                  : FONT_SIZE_MAP[fontSize].bevel * 2
+              }
               letterSpacing={beveled ? 0.05 : 0}
+              material={
+                fontColor === undefined
+                  ? new MeshNormalMaterial()
+                  : new MeshToonMaterial({ fog: true, color: fontColor })
+              }
             >
               {value}
-              {material}
-            </Text3D>
+            </Text3D> */}
           </Center>
         );
       })}
@@ -134,3 +168,33 @@ function Sphere3DText({
 }
 
 export default Sphere3DText;
+
+function ThreeWord({
+  rotaion,
+  font,
+  fontSize,
+  beveled,
+  fontColor,
+  hoverColor,
+  value,
+}: any) {
+  return (
+    <Text3D
+      rotation={rotaion}
+      font={font}
+      size={fontSize}
+      height={fontSize / 2}
+      bevelEnabled={beveled}
+      bevelSize={fontSize / 10}
+      bevelThickness={fontSize / 5}
+      letterSpacing={beveled ? 0.05 : 0}
+      material={
+        fontColor === undefined
+          ? new MeshNormalMaterial()
+          : new MeshToonMaterial({ fog: true, color: fontColor })
+      }
+    >
+      {value}
+    </Text3D>
+  );
+}
