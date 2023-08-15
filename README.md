@@ -69,16 +69,25 @@ const TEXT_ARR = [
 
 ### Props
 
-| Name         | Type           | Description                                            |
-| ------------ | -------------- | ------------------------------------------------------ | --------------------- |
-| `textList`   | `string[]`     | **Required.** List of strings to be drawn on a sphere. |
-| `width`      | `string        | number`                                                | The width of canvas.  |
-| `height`     | `string        | number`                                                | The height of canvas. |
-| `radius`     | `number`       | Sphere radius.                                         |
-| `distance`   | `number`       | The distance from the camera to the sphere.            |
-| `fontSize`   | `number = 1.2` | The size of text.                                      |
-| `fontColor`  | `string`       | Default color of the text.                             |
-| `hoverColor` | `string`       | Color of the text when mouse over the text.            |
+```typescript
+type Props = {
+  /** List of strings to be drawn on a sphere */
+  textList: string[];
+  /** The width and height of canvas */
+  width?: string;
+  height?: string;
+  /** Sphere radius */
+  radius?: number;
+  /** The distance from the camera to the sphere .*/
+  distance?: number;
+  /** The size of text */
+  fontSize?: number;
+  /** Default color of the text */
+  fontColor?: string;
+  /** Color of the text when mouse over the text.  */
+  hoverColor?: string;
+};
+```
 
 ## Usage
 
@@ -98,17 +107,33 @@ function Items() {
 
 ### Props
 
-| Name               | Type                          | Description                                            |
-| ------------------ | ----------------------------- | ------------------------------------------------------ | --------------------- |
-| `textList`         | `string[]`                    | **Required.** List of strings to be drawn on a sphere. |
-| `width`            | `string                       | number`                                                | The width of canvas.  |
-| `height`           | `string                       | number`                                                | The height of canvas. |
-| `radius`           | `number`                      | Sphere radius.                                         |
-| `distance`         | `number`                      | The distance from the camera to the sphere.            |
-| `fontSize`         | `number = 1.2`                | The size of text.                                      |
-| `autoRotate`       | `boolean = false`             | Sphere auto rotate                                     |
-| `defaultRotation`  | `number = { x:15, y:15, z:0}` | Text rotation                                          |
-| `alwaysFaceCamera` | `boolean = true`              | Text always face to camera                             |
+```typescript
+type Props = {
+  /** List of strings to be drawn on a sphere */
+  textList: string[];
+  /** The width and height of canvas */
+  width?: string;
+  height?: string;
+  /** Sphere radius */
+  radius?: number;
+  /** The distance from the camera to the sphere .*/
+  distance?: number;
+  /** The size of text */
+  fontSize?: number;
+  /** Default color of the text */
+  fontColor?: string = 1.2;
+  /** Sphere auto rotate */
+  autoRotate?: boolean = false;
+  /** Text rotation */
+  defaultRotation?: { x: number; y: number; z: number } = {
+    x: 15,
+    y: 15,
+    z: 0,
+  };
+  /** Text always face to camera */
+  alwaysFaceCamera?: boolean = true;
+};
+```
 
 ## Usage
 
