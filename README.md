@@ -2,13 +2,7 @@
 
 **A ReactJS component to render a 3D Sphere Text.**
 
-By installing this component and writing only a data you can obtain this
-
-<img src="" alt="react-sphere-text" />
-
-or
-
-<img src="" alt="react-sphere-3d-text" />
+By installing this component and writing only a data you can obtain 3D Sphere Text
 
 ## Installation
 
@@ -71,24 +65,25 @@ const TEXT_ARR = [
 
 ---
 
+<img src="https://github.com/hi6724/react-3d-text/blob/master/public/react-sphere.png?raw=true" alt="react-sphere-text" />
+
 ### Props
 
-| Name         | Type       | Description                                 |
-| ------------ | ---------- | ------------------------------------------- | ------------------------------------------- |
-| `textList`   | `string[]` | **Required.** The total number of pages.    |
-| `width`      | `string    | number`                                     | The range of pages displayed.               |
-| `height`     | `string    | number`                                     | The number of pages to display for margins. |
-| `radius`     | `number`   | The number of pages to display for margins. |
-| `distance`   | `number`   | The number of pages to display for margins. |
-| `fontSize`   | `number`   | The number of pages to display for margins. |
-| `fontColor`  | `string`   | The number of pages to display for margins. |
-| `hoverColor` | `string`   | The number of pages to display for margins. |
+| Name         | Type           | Description                                            |
+| ------------ | -------------- | ------------------------------------------------------ | --------------------- |
+| `textList`   | `string[]`     | **Required.** List of strings to be drawn on a sphere. |
+| `width`      | `string        | number`                                                | The width of canvas.  |
+| `height`     | `string        | number`                                                | The height of canvas. |
+| `radius`     | `number`       | Sphere radius.                                         |
+| `distance`   | `number`       | The distance from the camera to the sphere.            |
+| `fontSize`   | `number = 1.2` | The size of text.                                      |
+| `fontColor`  | `string`       | Default color of the text.                             |
+| `hoverColor` | `string`       | Color of the text when mouse over the text.            |
 
 ## Usage
 
 ```javascript
-import React, { useEffect, useState } from 'react';
-import { Sphere3DText, SphereText } from 'react-3d-text';
+import { SphereText } from 'react-3d-text';
 
 function Items() {
   return <SphereText textList={TEXT_ARR} width='1000px' height='500px' />;
@@ -99,24 +94,26 @@ function Items() {
 
 ---
 
+<img src="https://github.com/hi6724/react-3d-text/blob/master/public/react-3d-sphere.png?raw=true" alt="react-sphere-3d-text" />
+
 ### Props
 
-| Name         | Type       | Description                                 |
-| ------------ | ---------- | ------------------------------------------- | ------------------------------------------- |
-| `textList`   | `string[]` | **Required.** The total number of pages.    |
-| `width`      | `string    | number`                                     | The range of pages displayed.               |
-| `height`     | `string    | number`                                     | The number of pages to display for margins. |
-| `radius`     | `number`   | The number of pages to display for margins. |
-| `distance`   | `number`   | The number of pages to display for margins. |
-| `fontSize`   | `number`   | The number of pages to display for margins. |
-| `fontColor`  | `string`   | The number of pages to display for margins. |
-| `hoverColor` | `string`   | The number of pages to display for margins. |
+| Name               | Type                          | Description                                            |
+| ------------------ | ----------------------------- | ------------------------------------------------------ | --------------------- |
+| `textList`         | `string[]`                    | **Required.** List of strings to be drawn on a sphere. |
+| `width`            | `string                       | number`                                                | The width of canvas.  |
+| `height`           | `string                       | number`                                                | The height of canvas. |
+| `radius`           | `number`                      | Sphere radius.                                         |
+| `distance`         | `number`                      | The distance from the camera to the sphere.            |
+| `fontSize`         | `number = 1.2`                | The size of text.                                      |
+| `autoRotate`       | `boolean = false`             | Sphere auto rotate                                     |
+| `defaultRotation`  | `number = { x:15, y:15, z:0}` | Text rotation                                          |
+| `alwaysFaceCamera` | `boolean = true`              | Text always face to camera                             |
 
 ## Usage
 
 ```javascript
-import React, { useEffect, useState } from 'react';
-import { Sphere3DText, SphereText } from 'react-3d-text';
+import { Sphere3DText } from 'react-3d-text';
 
 function Items() {
   return <Sphere3DText textList={TEXT_ARR} width='1000px' height='500px' />;
